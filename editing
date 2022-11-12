@@ -1,0 +1,8 @@
+kitchen =>  cat_id ->int not string
+            provider_id-> int not string
+            rating -> double not string     
+
+
+Product =>  kitchen_id -> int not string 
+            price -> double not int          
+            price_include_tax -> double not int

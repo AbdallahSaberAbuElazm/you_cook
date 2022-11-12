@@ -1,0 +1,62 @@
+name: you_cook
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # dio: 
+  http: 
+  get:
+  equatable: null
+  dartz: 
+  file_picker: null
+  flutter_easyloading: null
+  flutter_staggered_grid_view: ^0.4.0
+  hive: null
+  hive_flutter: null
+  image_picker: null
+  internet_connection_checker: null
+  introduction_screen: null
+  path: null
+  path_provider: null
+  flutter_bloc: 
+  get_it:
+  flutter_svg:
+  flutter_rating_bar:
+  cached_network_image:
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    
+  fonts:
+    - family: NotoKufiArabic
+      fonts:
+        - asset: assets/fonts/NotoKufiArabic-Regular.ttf
+        - asset: assets/fonts/NotoKufiArabic-Black.ttf
+        - asset: assets/fonts/NotoKufiArabic-Bold.ttf
+        - asset: assets/fonts/NotoKufiArabic-ExtraBold.ttf
+        - asset: assets/fonts/NotoKufiArabic-Light.ttf
+        - asset: assets/fonts/NotoKufiArabic-Medium.ttf
+        - asset: assets/fonts/NotoKufiArabic-Thin.ttf
+ 
