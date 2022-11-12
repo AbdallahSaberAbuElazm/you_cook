@@ -3,6 +3,7 @@ import 'package:you_cook/features/relish/data/models/user_service.dart';
 
 class HiveBoxes {
   static final _userType = Hive.box<String>('userType');
+  static final _userId = Hive.box<int>('userId');
   static final _showHome = Hive.box<bool>('firstOpen');
   static final _userToken = Hive.box<String>('userToken');
   static final _userName = Hive.box<String>('userName');
@@ -12,6 +13,7 @@ class HiveBoxes {
   static final _userAddress = Hive.box<String>('userAddress');
 
   static setUserData({required UserServiceModel userServiceModel}) {
+    setUserId(userId: userServiceModel.userId);
     setUserName(userName: userServiceModel.userName);
     setEmail(email: userServiceModel.email);
     setPhoneNumber(phoneNumber: userServiceModel.phoneNumber);
@@ -26,6 +28,10 @@ class HiveBoxes {
     setUserAddress(userAddress: '');
 
     setPhoneNumber(phoneNumber: '');
+  }
+
+  static setUserId({required int userId}) {
+    _userId.put('userId', userId);
   }
 
   static setUserName({required String userName}) {
@@ -61,6 +67,7 @@ class HiveBoxes {
   }
 
   static String? getUserType() => _userType.get('userType');
+  static int? getUserId() => _userId.get('userId');
   static bool? getShowHome() => _showHome.get('firstOpen');
   static String? getUserToken() => _userToken.get('userToken');
   static String? getUserName() => _userName.get('userName');

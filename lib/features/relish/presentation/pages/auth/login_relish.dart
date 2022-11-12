@@ -132,14 +132,17 @@ class _LoginRelishState extends State<LoginRelish> {
                                               children: [
                                                 GoElevatedBtn(
                                                     onPressed: () {
-                                                      Controllers.userController
-                                                          .loginUser(
-                                                              email:
-                                                                  _emailController
-                                                                      .text,
-                                                              password:
-                                                                  _passwordController
-                                                                      .text);
+                                                      Controllers.userController.loginUser(
+                                                          email:
+                                                              _emailController
+                                                                  .text
+                                                                  .trimLeft()
+                                                                  .trimRight(),
+                                                          password:
+                                                              _passwordController
+                                                                  .text
+                                                                  .trimLeft()
+                                                                  .trimRight());
                                                     },
                                                     title: 'تسجيل الدخول',
                                                     btnColor: redColor,

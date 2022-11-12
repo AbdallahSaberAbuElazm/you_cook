@@ -180,22 +180,33 @@ class _RegisterRelishState extends State<RegisterRelish> {
                                                                 userInfo: {
                                                               'userName':
                                                                   _userNameController
-                                                                      .text,
+                                                                      .text
+                                                                      .trimLeft()
+                                                                      .trimRight(),
                                                               'email':
                                                                   _emailController
-                                                                      .text,
+                                                                      .text
+                                                                      .trimLeft()
+                                                                      .trimRight(),
                                                               'phoneNumber':
                                                                   _phoneNumberController
-                                                                      .text,
-                                                              'area':
-                                                                  _areaController
-                                                                      .text,
+                                                                      .text
+                                                                      .trimLeft()
+                                                                      .trimRight(),
+                                                              'area': _areaController
+                                                                  .text
+                                                                  .trimLeft()
+                                                                  .trimRight(),
                                                               'address':
                                                                   _addressController
-                                                                      .text,
+                                                                      .text
+                                                                      .trimLeft()
+                                                                      .trimRight(),
                                                               'password':
                                                                   _passwordController
-                                                                      .text,
+                                                                      .text
+                                                                      .trimLeft()
+                                                                      .trimRight(),
                                                             });
                                                       }
                                                     }

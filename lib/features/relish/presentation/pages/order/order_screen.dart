@@ -6,6 +6,7 @@ import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/core/widgets/go_elevated_btn.dart';
 import 'package:you_cook/features/relish/domain/entities/order.dart';
 import 'package:you_cook/features/relish/presentation/widgets/carts/choose_payment_card.dart';
+import 'package:you_cook/features/relish/presentation/widgets/orders/current_order.dart';
 import 'package:you_cook/features/relish/presentation/widgets/orders/get_list_of_orders.dart';
 
 class OrderScreen extends StatefulWidget {
@@ -32,12 +33,7 @@ class _OrderScreenState extends State<OrderScreen> {
         textDirection: TextDirection.rtl,
         child: ListView(children: [
           Obx(() => ListOfOrders(
-                list1:
-                    // (Controllers
-                    //         .cartController.cartOrder[0].cartItems.isNotEmpty)
-                    //     ? Controllers.cartController.cartOrder[0].cartItems
-                    // :
-                    [],
+                list1: Controllers.cartController.cartOrder[0].cartItems,
                 list2: previousOrders!,
                 compare1: Controllers.selectedVariableController
                     .selectedButtonForShowListOrders.value,
@@ -48,6 +44,15 @@ class _OrderScreenState extends State<OrderScreen> {
                     ? Controllers.cartController.cartOrder.length
                     : previousOrders!.length,
               )),
+        ]));
+  }
+
+  Widget _infoOfCurrentOrder() {
+    return ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          const CurrentOrder(),
           Padding(
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height / 90),
@@ -100,8 +105,8 @@ class _OrderScreenState extends State<OrderScreen> {
                   onPressed: () {},
                   title: 'اطلب الآن',
                   btnColor: redColor,
-                  textColor: whiteColor)),
-        ]));
+                  textColor: whiteColor))
+        ]);
   }
 
   Widget _drawResetInfo({required BuildContext context}) {

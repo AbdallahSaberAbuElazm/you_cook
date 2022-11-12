@@ -33,6 +33,7 @@ void main() async {
 
 Future initHiveBoxes() async {
   await Hive.openBox<String>('userType');
+  await Hive.openBox<int>('userId');
   await Hive.openBox<bool>('firstOpen');
   await Hive.openBox<String>('userToken');
   await Hive.openBox<String>('userName');

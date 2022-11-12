@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:you_cook/core/strings/api/api_url.dart';
 import 'package:you_cook/core/styles/color.dart';
+import 'package:you_cook/core/util/hive_boxes.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/features/relish/domain/entities/favourite.dart';
 import 'package:you_cook/features/relish/domain/entities/kitchen.dart';
@@ -103,7 +104,8 @@ class ListOfProducts extends StatelessWidget {
                                                   .addProductToFavouriteList(
                                                       favourite: Favourite(
                                                           // favouriteId: 0,
-                                                          userId: 0,
+                                                          userId: HiveBoxes
+                                                              .getUserId()!,
                                                           productId:
                                                               list1[index]
                                                                   .productId));

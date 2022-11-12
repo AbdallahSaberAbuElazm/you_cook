@@ -47,6 +47,7 @@ class FavouriteController extends GetxController {
   addProductToFavouriteList({required Favourite favourite}) {
     if (!favourites.contains(favourite)) {
       favourites.add(favourite);
+      addFavouriteUsecase(favourite: favourite);
     }
   }
 

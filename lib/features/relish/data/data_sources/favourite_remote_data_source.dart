@@ -39,8 +39,13 @@ class FavouriteRemoteDataSourceImpl implements FavouriteRemoteDataSource {
       'product_id': favouriteModel.productId,
     };
 
-    final response =
-        await client.post(Uri.parse(ApiUrl.FAVOURITES_URL), body: body);
+    final response = await client.post(
+      Uri.parse(ApiUrl.FAVOURITES_URL),
+      body: body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    );
     if (response.statusCode == 201) {
       return Future.value(unit);
     } else {

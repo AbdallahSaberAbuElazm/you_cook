@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/features/relish/domain/entities/order.dart';
 import 'package:you_cook/features/relish/presentation/pages/order/order_screen.dart';
+import 'package:you_cook/features/relish/presentation/widgets/orders/current_order.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/app_bars.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/buttons.dart';
 
@@ -61,7 +62,13 @@ class _UserOrdersState extends State<UserOrders> {
                   condition: Controllers.selectedVariableController
                       .selectedButtonForShowListOrders.value,
                   context: context)),
-              const Expanded(child: OrderScreen())
+              // const Expanded(child: OrderScreen())
+              Expanded(
+                  child: Obx(() => (Controllers.selectedVariableController
+                              .selectedButtonForShowListOrders.value ==
+                          'طلبات حالية')
+                      ? const CurrentOrder()
+                      : const SizedBox()))
             ])));
   }
 }

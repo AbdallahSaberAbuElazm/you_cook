@@ -16,7 +16,7 @@ class ApiUrl {
   static const String CART_CONTENT_URL = '${BASE_URL}cart-content/';
   static const String DELETE_CART_URL = '${BASE_URL}cart-items/';
   static const String SLIDERS_URL = '${BASE_URL}sliders/';
-  static const String FAVOURITES_URL = '${BASE_URL}favourites/';
+  static const String FAVOURITES_URL = '${BASE_URL}favourites';
   static const String ORDERS_URL = '${BASE_URL}orders/get_all/';
   static const String SEND_ORDER_URL = '${BASE_URL}orders/send/';
 }

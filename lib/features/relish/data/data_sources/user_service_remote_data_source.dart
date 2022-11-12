@@ -36,17 +36,17 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
       Uri.parse(ApiUrl.LOGIN_URL),
       body: json.encode({'email': email, 'password': password}),
       headers: {
-        // HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded",
         "Content-Type": "application/json",
-        // "Access-Control-Allow-Origin": "*"
       },
     );
 
     if (response.statusCode == 200) {
       print('login data');
       final Map<String, dynamic> bodyData = json.decode(response.body);
-      UserServiceModel user = UserServiceModel.fromJson(bodyData['user']);
+      UserServiceModel user =
+          UserServiceModel.fromJson(bodyData['data']['user']);
       HiveBoxes.setUserData(userServiceModel: user);
+      HiveBoxes.setUserToken(userToken: bodyData['data']['token']);
       Get.off(() => Home(recentPage: const RelishScreen(), selectedIndex: 0));
       return user;
     } else {

@@ -16,7 +16,7 @@ class UserServiceModel extends UserService {
         email: fromJson['email'],
         phoneNumber: fromJson['phone'],
         area: fromJson['last_name'],
-        address: fromJson['phone_ext']);
+        address: fromJson['type']);
   }
 
   Map<String, dynamic> toMap() {
