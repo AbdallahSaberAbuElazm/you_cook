@@ -11,12 +11,12 @@ class UserServiceModel extends UserService {
 
   static UserServiceModel fromJson(Map<String, dynamic> fromJson) {
     return UserServiceModel(
-        userId: fromJson['userId'],
-        userName: fromJson['userName'],
+        userId: fromJson['id'],
+        userName: fromJson['first_name'],
         email: fromJson['email'],
-        phoneNumber: fromJson['phoneNumber'],
-        area: fromJson['area'],
-        address: fromJson['address']);
+        phoneNumber: fromJson['phone'],
+        area: fromJson['last_name'],
+        address: fromJson['phone_ext']);
   }
 
   Map<String, dynamic> toMap() {

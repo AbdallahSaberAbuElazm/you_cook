@@ -42,9 +42,10 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
       },
     );
 
-    if (response.statusCode == 201) {
-      final bodyData = json.decode(response.body);
-      UserServiceModel user = UserServiceModel.fromJson(bodyData['data']);
+    if (response.statusCode == 200) {
+      print('login data');
+      final Map<String, dynamic> bodyData = json.decode(response.body);
+      UserServiceModel user = UserServiceModel.fromJson(bodyData['user']);
       HiveBoxes.setUserData(userServiceModel: user);
       Get.off(() => Home(recentPage: const RelishScreen(), selectedIndex: 0));
       return user;

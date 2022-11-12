@@ -6,7 +6,7 @@ class ApiUrl {
   static const String BASE_URL = 'https://youcooksa.com/youcook/api/v1/';
   static const String STORAGE_URL = 'https://youcooksa.com/youcook/public/';
   static const String REGISTER_URL = '${BASE_URL}register';
-  static const String LOGIN_URL = '${BASE_URL}login/';
+  static const String LOGIN_URL = '${BASE_URL}login';
   static const String ALL_VENDORS_URL = '${BASE_URL}vendors';
   static const String CATEGORIES_URL = '${BASE_URL}categories/';
   static const String KITCHENS_URL = '${BASE_URL}kitchens/';
