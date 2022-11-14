@@ -30,10 +30,10 @@ class FavouriteModelRepository extends FavouriteRepository {
 
   @override
   Future<Either<Failure, Unit>> deleteFavourite(
-      {required int favouriteId}) async {
+      {required int productId}) async {
     return await ReturnDataSource.getReturnMessage(
-        func: () => favouriteRemoteDataSourceImpl.deleteFavourite(
-            favouriteId: favouriteId),
+        func: () =>
+            favouriteRemoteDataSourceImpl.deleteFavourite(productId: productId),
         networkInfo: networkInfo);
   }
 

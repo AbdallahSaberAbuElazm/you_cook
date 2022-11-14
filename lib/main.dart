@@ -70,7 +70,7 @@ getControllers() {
       fenix: true);
   Get.lazyPut<CartController>(
       () => CartController(
-          addCartRepository: di.sl(),
+          addCartUsecase: di.sl(),
           getAllCartUsecase: di.sl(),
           deleteCartUsecase: di.sl()),
       fenix: true);

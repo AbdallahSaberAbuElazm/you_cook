@@ -41,7 +41,6 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
     );
 
     if (response.statusCode == 200) {
-      print('login data');
       final Map<String, dynamic> bodyData = json.decode(response.body);
       UserServiceModel user =
           UserServiceModel.fromJson(bodyData['data']['user']);

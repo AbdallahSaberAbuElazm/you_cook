@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LogoWidget extends StatelessWidget {
   const LogoWidget({
@@ -11,8 +10,8 @@ class LogoWidget extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2,
       height: MediaQuery.of(context).size.height / 9,
-      child: SvgPicture.asset(
-        'assets/images/logo.svg',
+      child: Image.asset(
+        'assets/images/logo.png',
         // fit: BoxFit.fill,
         // color: Colors.white,
       ),

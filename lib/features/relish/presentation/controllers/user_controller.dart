@@ -62,7 +62,7 @@ class UserController extends GetxController {
       failureTxt.value = mapFailureToMessage(failure);
     }, (userData) {
       failureTxt.value = '';
-      users[0] = userData;
+      users.add(userData);
     });
   }
 

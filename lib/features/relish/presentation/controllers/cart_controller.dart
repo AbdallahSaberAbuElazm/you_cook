@@ -16,11 +16,11 @@ class CartController extends GetxController {
   final priceCart = 0.0.obs;
   var isLoading = true.obs;
 
-  final AddCartUsecase addCartRepository;
+  final AddCartUsecase addCartUsecase;
   final GetAllCartUsecase getAllCartUsecase;
   final DeleteCartUsecase deleteCartUsecase;
   CartController(
-      {required this.addCartRepository,
+      {required this.addCartUsecase,
       required this.getAllCartUsecase,
       required this.deleteCartUsecase});
 
@@ -65,6 +65,12 @@ class CartController extends GetxController {
           product: product,
           price: price,
           quantity: quantity));
+      addCartUsecase(
+          cart: Cart(
+              price: price,
+              discount: 0.0,
+              totalPrice: product.priceIncludeTax,
+              cartItems: cartItems));
     }
   }
 
@@ -104,11 +110,7 @@ class CartController extends GetxController {
     }
     cartOrder.clear();
     cartOrder.add(Cart(
-        price: price,
-        discount: 0.0,
-        totalPrice: price,
-        deliveryMethod: '',
-        cartItems: cartItems));
+        price: price, discount: 0.0, totalPrice: price, cartItems: cartItems));
     update();
   }
 }

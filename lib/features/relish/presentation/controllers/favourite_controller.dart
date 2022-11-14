@@ -46,8 +46,9 @@ class FavouriteController extends GetxController {
 
   addProductToFavouriteList({required Favourite favourite}) {
     if (!favourites.contains(favourite)) {
-      favourites.add(favourite);
-      addFavouriteUsecase(favourite: favourite);
+      // favourites.add(favourite);
+      addFavouriteUsecase(favourite: favourite)
+          .then((value) => fetchAllFavouritesFromRemoteData());
     }
   }
 
@@ -58,6 +59,7 @@ class FavouriteController extends GetxController {
       final removeFavourite = favourites
           .indexWhere((favourite) => favourite.productId == product.productId);
       favourites.removeAt(removeFavourite);
+      // deleteFavouriteUsecase(productId: product.productId);
     }
   }
 }

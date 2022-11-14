@@ -7,7 +7,7 @@ class DeleteFavouriteUsecase {
 
   DeleteFavouriteUsecase(this.favouriteRepository);
 
-  Future<Either<Failure, Unit>> call({required int favouriteId}) async {
-    return await favouriteRepository.deleteFavourite(favouriteId: favouriteId);
+  Future<Either<Failure, Unit>> call({required int productId}) async {
+    return await favouriteRepository.deleteFavourite(productId: productId);
   }
 }

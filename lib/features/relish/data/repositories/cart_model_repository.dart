@@ -36,7 +36,6 @@ class CartModelRepository implements CartRepository {
               price: cart.price,
               discount: cart.discount,
               totalPrice: cart.totalPrice,
-              deliveryMethod: cart.deliveryMethod,
               cartItems: cart.cartItems,
             )),
         networkInfo: networkInfo);

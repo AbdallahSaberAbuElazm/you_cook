@@ -71,8 +71,8 @@ class _HomeState extends State<Home> {
                       name: 'طلباتي'),
                   _drawIcon(
                       icon: widget.selectedIndex == 3
-                          ? Icons.person_rounded
-                          : Icons.person_rounded,
+                          ? Icons.percent_sharp
+                          : Icons.percent_sharp,
                       index: 3,
                       name: 'العروض'),
                   _drawIcon(

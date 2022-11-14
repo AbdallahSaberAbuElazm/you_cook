@@ -43,8 +43,8 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
       'delivery_method': cart.totalPrice,
     };
 
-    final response =
-        await client.post(Uri.parse(ApiUrl.ALL_CART_URL), body: body);
+    final response = await client.post(Uri.parse(ApiUrl.ALL_CART_URL),
+        body: json.encode(body));
     return ReturnDataSource.checkStatusCodeForDeleteUpdateData(
         response: response, statusCode: 201);
   }

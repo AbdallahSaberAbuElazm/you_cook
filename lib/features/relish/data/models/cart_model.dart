@@ -6,7 +6,6 @@ class CartModel extends Cart {
       required super.price,
       required super.discount,
       required super.totalPrice,
-      required super.deliveryMethod,
       required super.cartItems});
 
   static CartModel fromJson(Map<String, dynamic> jsonObject) {
@@ -16,7 +15,6 @@ class CartModel extends Cart {
       price: jsonObject['price'],
       discount: jsonObject['discount'],
       totalPrice: jsonObject['total_price'],
-      deliveryMethod: jsonObject['delivery_method'],
     );
   }
 
@@ -26,7 +24,6 @@ class CartModel extends Cart {
       'price': price,
       'discount': discount,
       'total_price': totalPrice,
-      'delivery_method': deliveryMethod,
     };
   }
 }

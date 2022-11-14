@@ -49,8 +49,8 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
       'payment_method': orderModel.paymentMethod,
     };
 
-    final response =
-        await client.post(Uri.parse(ApiUrl.SEND_ORDER_URL), body: body);
+    final response = await client.post(Uri.parse(ApiUrl.SEND_ORDER_URL),
+        body: json.encode(body));
     if (response.statusCode == 201) {
       return Future.value(unit);
     } else {

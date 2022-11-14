@@ -76,12 +76,7 @@ class AppBars {
                   Icons.shopping_cart_outlined,
                   color: whiteColor,
                   size: 29,
-                )
-                //  Image.asset(
-                //   'assets/images/cart_img.png',
-                //   fit: BoxFit.fill,
-                // ),
-                ))
+                )))
       ],
     );
   }

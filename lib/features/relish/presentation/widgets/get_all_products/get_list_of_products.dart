@@ -103,7 +103,6 @@ class ListOfProducts extends StatelessWidget {
                                               Controllers.favouriteController
                                                   .addProductToFavouriteList(
                                                       favourite: Favourite(
-                                                          // favouriteId: 0,
                                                           userId: HiveBoxes
                                                               .getUserId()!,
                                                           productId:

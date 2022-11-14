@@ -6,7 +6,6 @@ class Cart extends Equatable {
   final double price;
   final double discount;
   final double totalPrice;
-  final String deliveryMethod;
   final List<CartItems> cartItems;
 
   Cart(
@@ -14,10 +13,8 @@ class Cart extends Equatable {
       required this.price,
       required this.discount,
       required this.totalPrice,
-      required this.deliveryMethod,
       required this.cartItems});
 
   @override
-  List<Object?> get props =>
-      [cartId, price, discount, totalPrice, deliveryMethod, cartItems];
+  List<Object?> get props => [cartId, price, discount, totalPrice, cartItems];
 }

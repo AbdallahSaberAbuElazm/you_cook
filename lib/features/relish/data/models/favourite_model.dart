@@ -10,10 +10,8 @@ class FavouriteModel extends Favourite {
 
   static FavouriteModel fromJson(Map<String, dynamic> jsonObject) {
     return FavouriteModel(
-      // favouriteId: jsonObject['id'],
       userId: jsonObject['user_id'],
       productId: jsonObject['product_id'],
-      // kitchenId: jsonObject['kitchen_id'],
     );
   }
 }
