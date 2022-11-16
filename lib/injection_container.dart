@@ -27,8 +27,9 @@ import 'package:you_cook/features/relish/domain/repositories/offer_repository.da
 import 'package:you_cook/features/relish/domain/repositories/product_repository.dart';
 import 'package:you_cook/features/relish/domain/repositories/user_service_repository.dart';
 import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/add_cart_usecase.dart';
-import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/delete_cart_usecase.dart';
-import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/get_all_cart_usecase.dart';
+import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/delete_cart_items_usecase.dart';
+import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/get_specific_cart_usecase.dart';
+import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/get_user_cart_usecase.dart';
 import 'package:you_cook/features/relish/domain/use_cases/favourite_usecase/add_favourite_usecase.dart';
 import 'package:you_cook/features/relish/domain/use_cases/favourite_usecase/delete_favourite_usecase.dart';
 import 'package:you_cook/features/relish/domain/use_cases/favourite_usecase/get_all_favourite_usecase.dart';
@@ -133,14 +134,16 @@ Future<void> init() async {
   //! cart
   //controller
   sl.registerFactory(() => CartController(
-      addCartRepository: sl(),
-      deleteCartUsecase: sl(),
-      getAllCartUsecase: sl()));
+      addCartUsecase: sl(),
+      deleteCartItemUsecase: sl(),
+      getAllCartUsecase: sl(),
+      getSpecificCartUsecase: sl()));
 
   //usecases
   sl.registerLazySingleton(() => GetAllCartUsecase(sl()));
   sl.registerLazySingleton(() => AddCartUsecase(sl()));
-  sl.registerLazySingleton(() => DeleteCartUsecase(sl()));
+  sl.registerLazySingleton(() => DeleteCartItemUsecase(sl()));
+  sl.registerLazySingleton(() => GetSpecificCartUsecase(sl()));
   //repositories
   sl.registerLazySingleton<CartRepository>(
       () => CartModelRepository(cartRemoteDataSource: sl(), networkInfo: sl()));

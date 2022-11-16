@@ -18,31 +18,37 @@ class CustomTextFormField extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 80),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 90),
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: whiteColor,
-              border: Border.all(width: 0.3, color: greyColor),
-              borderRadius: const BorderRadius.all(Radius.circular(36))),
+              borderRadius: BorderRadius.all(Radius.circular(36))),
           child: Stack(
             children: [
               Container(
                   decoration: BoxDecoration(
-                    color: whiteColor,
-                    border: Border.all(width: 0.6, color: greyColor),
-                    borderRadius: const BorderRadius.all(Radius.circular(36)),
-                  ),
+                      color: whiteColor,
+                      border: Border.all(width: 0.6, color: greyColor),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(36),
+                      ),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: lightGreyColor,
+                          spreadRadius: 1,
+                          blurRadius: 2,
+                          offset: Offset(0, 1),
+                        )
+                      ]),
                   child: Padding(
                       padding: EdgeInsets.only(
                           right: MediaQuery.of(context).size.width / 50,
-                          top: 10),
+                          top: 8),
                       child: TextFormField(
                         enabled: isEnabled,
                         controller: controller,
                         decoration: const InputDecoration(
                             contentPadding: EdgeInsets.only(
-                              // top: 20,
-                              // bottom: 4,
                               left: 20,
                               right: 20,
                             ),

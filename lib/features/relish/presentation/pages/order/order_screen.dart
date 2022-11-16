@@ -33,7 +33,8 @@ class _OrderScreenState extends State<OrderScreen> {
         textDirection: TextDirection.rtl,
         child: ListView(children: [
           Obx(() => ListOfOrders(
-                list1: Controllers.cartController.cartOrder[0].cartItems,
+                list1: [],
+                // Controllers.cartController.cartOrder[0].cartItems,
                 list2: previousOrders!,
                 compare1: Controllers.selectedVariableController
                     .selectedButtonForShowListOrders.value,

@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:you_cook/core/error/failure.dart';
 import 'package:you_cook/core/strings/failure/failure.dart';
+import 'package:you_cook/core/util/hive_boxes.dart';
+import 'package:you_cook/features/relish/data/models/user_service_model.dart';
 import 'package:you_cook/features/relish/domain/entities/user_service.dart';
 import 'package:you_cook/features/relish/domain/use_cases/user_usecase/login_user_usecase.dart';
 import 'package:you_cook/features/relish/domain/use_cases/user_usecase/logout_user_usecase.dart';
@@ -27,8 +29,6 @@ class UserController extends GetxController {
       isLoading(true);
       var userData = await registerUserServiceUsecase(userData: userInfo);
       _mapFailureOrUnit(userData);
-    } catch (e) {
-      print(e.toString());
     } finally {
       isLoading(false);
     }
@@ -55,6 +55,10 @@ class UserController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  updateUserData({required UserServiceModel userInfo}) {
+    HiveBoxes.setUserData(userServiceModel: userInfo);
   }
 
   _mapFailureOrUser(Either<Failure, UserService> either) {

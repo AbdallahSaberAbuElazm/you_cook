@@ -3,10 +3,10 @@ import 'package:you_cook/core/network/network.dart';
 import 'package:you_cook/core/util/return_data_source.dart';
 import 'package:you_cook/features/relish/data/data_sources/cart_remote_data_source.dart';
 import 'package:you_cook/features/relish/data/models/cart_items_model.dart';
-import 'package:you_cook/features/relish/data/models/cart_model.dart';
 import 'package:you_cook/features/relish/domain/entities/cart.dart';
 import 'package:you_cook/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:you_cook/features/relish/domain/entities/cart_items.dart';
 import 'package:you_cook/features/relish/domain/repositories/cart_repository.dart';
 
 class CartModelRepository implements CartRepository {
@@ -19,7 +19,7 @@ class CartModelRepository implements CartRepository {
   Future<Either<Failure, List<Cart>>> getAllCarts() async {
     if (await networkInfo.isConnected) {
       try {
-        return Right(await cartRemoteDataSource.getAllCart());
+        return Right(await cartRemoteDataSource.getAllUserCart());
       } on ServerException {
         return Left(ServerFailure());
       }
@@ -29,22 +29,24 @@ class CartModelRepository implements CartRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> addCart({required Cart cart}) async {
+  Future<Either<Failure, Unit>> addCart({required CartItems cartItem}) async {
     return await ReturnDataSource.getReturnMessage(
         func: () => cartRemoteDataSource.addCart(
-                cart: CartModel(
-              price: cart.price,
-              discount: cart.discount,
-              totalPrice: cart.totalPrice,
-              cartItems: cart.cartItems,
-            )),
+              cartItem: CartItemsModel(
+                  price: cartItem.price,
+                  // discount: cartItem.discount,
+                  // totalPrice: cartItem.totalPrice,
+                  cartItemId: cartItem.cartItemId,
+                  product: cartItem.product,
+                  quantity: cartItem.quantity),
+            ),
         networkInfo: networkInfo);
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteCart({required int cartId}) async {
+  Future<Either<Failure, Unit>> deleteCartItem({required int cartId}) async {
     return await ReturnDataSource.getReturnMessage(
-        func: () => cartRemoteDataSource.deleteCart(cartId: cartId),
+        func: () => cartRemoteDataSource.deleteCart(cartItemsId: cartId),
         networkInfo: networkInfo);
   }
 

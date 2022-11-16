@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:you_cook/features/relish/data/models/user_service.dart';
+import 'package:you_cook/features/relish/data/models/user_service_model.dart';
 
 class HiveBoxes {
   static final _userType = Hive.box<String>('userType');
@@ -11,6 +11,7 @@ class HiveBoxes {
   static final _phoneNumber = Hive.box<String>('phoneNumber');
   static final _userArea = Hive.box<String>('userArea');
   static final _userAddress = Hive.box<String>('userAddress');
+  static final _userImageProfile = Hive.box<String>('userImageProfile');
 
   static setUserData({required UserServiceModel userServiceModel}) {
     setUserId(userId: userServiceModel.userId);
@@ -19,6 +20,9 @@ class HiveBoxes {
     setPhoneNumber(phoneNumber: userServiceModel.phoneNumber);
     setUserArea(userArea: userServiceModel.area);
     setUserAddress(userAddress: userServiceModel.address);
+    setUserImageProfile(userImage: ''
+        //  userServiceModel.image.toString()
+        );
   }
 
   static removeDataForLogout() {
@@ -26,8 +30,12 @@ class HiveBoxes {
     setEmail(email: '');
     setUserArea(userArea: '');
     setUserAddress(userAddress: '');
-
     setPhoneNumber(phoneNumber: '');
+    setUserImageProfile(userImage: '');
+  }
+
+  static setUserImageProfile({required String userImage}) {
+    _userImageProfile.put('userImageProfile', userImage);
   }
 
   static setUserId({required int userId}) {
@@ -75,4 +83,6 @@ class HiveBoxes {
   static String? getPhoneNumber() => _phoneNumber.get('phoneNumber');
   static String? getUserArea() => _userArea.get('userArea');
   static String? getUserAddress() => _userAddress.get('userAddress');
+  static String? getUserImageProfile() =>
+      _userImageProfile.get('userImageProfile');
 }

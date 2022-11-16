@@ -5,7 +5,7 @@ import 'package:you_cook/core/util/return_data_source.dart';
 import 'package:you_cook/features/relish/data/data_sources/user_service_remote_data_source.dart';
 import 'package:you_cook/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:you_cook/features/relish/data/models/user_service.dart';
+import 'package:you_cook/features/relish/data/models/user_service_model.dart';
 import 'package:you_cook/features/relish/domain/entities/user_service.dart';
 import 'package:you_cook/features/relish/domain/repositories/user_service_repository.dart';
 
@@ -55,5 +55,20 @@ class UserServiceModelRepository implements UserServiceRepository {
     return await ReturnDataSource.getReturnMessage(
         func: () => userServiceRemoteDataSource.registerUser(userData),
         networkInfo: networkInfo);
+  }
+
+  @override
+  Future<Either<Failure, UserService>> updateUserProfile(
+      Map<String, dynamic> userData) async {
+    if (await networkInfo.isConnected) {
+      try {
+        return Right(await userServiceRemoteDataSource.updateUserProfile(
+            userData: userData));
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(OfflineFailure());
+    }
   }
 }

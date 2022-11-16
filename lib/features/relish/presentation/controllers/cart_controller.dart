@@ -1,15 +1,18 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 import 'package:you_cook/core/error/failure.dart';
+import 'package:you_cook/core/util/util.dart';
 import 'package:you_cook/features/relish/domain/entities/cart.dart';
 import 'package:you_cook/features/relish/domain/entities/cart_items.dart';
 import 'package:you_cook/features/relish/domain/entities/product.dart';
 import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/add_cart_usecase.dart';
-import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/delete_cart_usecase.dart';
-import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/get_all_cart_usecase.dart';
+import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/delete_cart_items_usecase.dart';
+import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/get_specific_cart_usecase.dart';
+import 'package:you_cook/features/relish/domain/use_cases/cart_usecase/get_user_cart_usecase.dart';
 
 class CartController extends GetxController {
-  final carts = <Cart>[].obs;
+  final cartWithItems = <Cart>[].obs;
   final cartOrder = <Cart>[].obs;
   final cartItems = <CartItems>[].obs;
   final _products = {}.obs;
@@ -18,11 +21,13 @@ class CartController extends GetxController {
 
   final AddCartUsecase addCartUsecase;
   final GetAllCartUsecase getAllCartUsecase;
-  final DeleteCartUsecase deleteCartUsecase;
+  final DeleteCartItemUsecase deleteCartItemUsecase;
+  final GetSpecificCartUsecase getSpecificCartUsecase;
   CartController(
       {required this.addCartUsecase,
       required this.getAllCartUsecase,
-      required this.deleteCartUsecase});
+      required this.deleteCartItemUsecase,
+      required this.getSpecificCartUsecase});
 
   @override
   void onInit() {
@@ -45,7 +50,7 @@ class CartController extends GetxController {
     return either.fold((failure) {
       // failureTxt.value = mapFailureToMessage(failure);
     }, (cartsData) {
-      carts.value = cartsData;
+      cartWithItems.value = cartsData;
     });
   }
 
@@ -55,22 +60,31 @@ class CartController extends GetxController {
   }
 
   void addProduct(
-      {required Product product, required double price, required quantity}) {
+      {required Product product,
+      required double price,
+      required int quantity,
+      required double discount,
+      required BuildContext context}) {
     if (_products.containsKey(product)) {
-      _products[product] += 1;
+      Util.snackBar(context: context, msg: 'هذا المنتج تمت اضافته الي السلة');
+      // _products[product] += 1;
     } else {
-      _products[product] = 1;
+      // _products[product] = 1;
       cartItems.add(CartItems(
-          cartItemId: product.productId,
+          // cartItemId: product.productId,
           product: product,
           price: price,
+          // discount: discount,
+          // totalPrice: price - discount,
           quantity: quantity));
       addCartUsecase(
-          cart: Cart(
-              price: price,
-              discount: 0.0,
-              totalPrice: product.priceIncludeTax,
-              cartItems: cartItems));
+        cartItem: CartItems(
+            price: price,
+            // discount: discount,
+            product: product,
+            // totalPrice: price - discount,
+            quantity: quantity),
+      ).then((value) => fetchAllCategoriesFromRemoteData());
     }
   }
 
@@ -80,19 +94,26 @@ class CartController extends GetxController {
   }
 
   void removeProduct(Product product) {
-    if (_products.containsKey(product) && _products[product] == 1) {
+    if (_products.containsKey(product)
+        //  && _products[product] == 1
+        ) {
       _products.removeWhere((key, value) => key == product);
-      final removeCartItem = cartItems
-          .indexWhere((cartItem) => cartItem.cartItemId == product.productId);
+      final removeCartItem = cartItems.indexWhere(
+          (cartItem) => cartItem.product.productId == product.productId);
       cartItems.removeAt(removeCartItem);
+      deleteCartItemUsecase(
+          cartItemId: cartItems
+              .where((cartItem) => product.productId == product.productId)
+              .single
+              .cartItemId!);
     } else {
-      _products[product] -= 1;
+      // _products[product] -= 1;
     }
   }
 
   getAllPriceOffCart() {
     priceCart.value = 0.0;
-    for (var cartData in carts) {
+    for (var cartData in cartWithItems) {
       priceCart.value += cartData.totalPrice;
     }
     update();

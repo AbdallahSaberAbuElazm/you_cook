@@ -56,5 +56,6 @@ class SelectedVariableController extends GetxController {
   //update product's quantity
   updateProductQuantity({required int productQty}) {
     selectedProductQuantity.value = productQty;
+    update();
   }
 }

@@ -70,7 +70,7 @@ class _LoginRelishState extends State<LoginRelish> {
                             alignment: Alignment.topCenter,
                             child: Text('تسجيل دخول',
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline1),
+                                style: Theme.of(context).textTheme.headline2),
                           ),
                         ),
                       ),

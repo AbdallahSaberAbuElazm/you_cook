@@ -3,8 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:you_cook/core/error/exception.dart';
 import 'package:you_cook/core/strings/api/api_url.dart';
-import 'package:you_cook/features/relish/data/models/cart_model.dart';
-import 'package:you_cook/features/relish/data/models/category_model.dart';
 import 'package:you_cook/features/relish/data/models/order_model.dart';
 
 abstract class OrderRemoteDataSource {
@@ -61,7 +59,7 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   @override
   Future<Unit> deleteOrder({required int orderId}) async {
     final response = await client.delete(
-        Uri.parse('${ApiUrl.DELETE_CART_URL}/${orderId.toString()}/delete'),
+        Uri.parse('${ApiUrl.ORDERS_URL}/${orderId.toString()}/delete'),
         headers: {'Content-Type': 'application/json'});
     return _checkStatusCodeForDeleteUpdatePosts(response);
   }

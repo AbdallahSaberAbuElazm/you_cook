@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:you_cook/core/styles/color.dart';
-import 'package:you_cook/features/relish/domain/entities/cart.dart';
-import 'package:you_cook/features/relish/presentation/pages/order/order_screen.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/offer_screen.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/profile_screen.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';

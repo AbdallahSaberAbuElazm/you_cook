@@ -45,6 +45,8 @@ class ListOfProducts extends StatelessWidget {
                     recentPage:
                         AddToCart(productIndex: index, kitchen: kitchen),
                     selectedIndex: 0));
+                Controllers.selectedVariableController
+                    .updateProductQuantity(productQty: 1);
               },
               child: Card(
                   color: whiteColor,

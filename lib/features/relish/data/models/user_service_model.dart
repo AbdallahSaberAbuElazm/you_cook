@@ -1,13 +1,14 @@
 import 'package:you_cook/features/relish/domain/entities/user_service.dart';
 
 class UserServiceModel extends UserService {
-  const UserServiceModel(
+  UserServiceModel(
       {required super.userId,
       required super.userName,
       required super.email,
       required super.phoneNumber,
       required super.area,
-      required super.address});
+      required super.address,
+      super.image});
 
   static UserServiceModel fromJson(Map<String, dynamic> fromJson) {
     return UserServiceModel(
@@ -16,7 +17,8 @@ class UserServiceModel extends UserService {
         email: fromJson['email'],
         phoneNumber: fromJson['phone'],
         area: fromJson['last_name'],
-        address: fromJson['type']);
+        address: fromJson['type'], // write address instead of type
+        image: fromJson['image'] ?? '');
   }
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class UserServiceModel extends UserService {
       'phoneNumber': phoneNumber,
       'area': area,
       'address': address,
+      'image': image
     };
   }
 }

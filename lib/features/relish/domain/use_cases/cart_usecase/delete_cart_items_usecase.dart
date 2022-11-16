@@ -2,12 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:you_cook/core/error/failure.dart';
 import 'package:you_cook/features/relish/domain/repositories/cart_repository.dart';
 
-class DeleteCartUsecase {
+class DeleteCartItemUsecase {
   final CartRepository cartRepository;
 
-  DeleteCartUsecase(this.cartRepository);
+  DeleteCartItemUsecase(this.cartRepository);
 
-  Future<Either<Failure, Unit>> call({required int cartId}) async {
-    return await cartRepository.deleteCart(cartId: cartId);
+  Future<Either<Failure, Unit>> call({required int cartItemId}) async {
+    return await cartRepository.deleteCartItem(cartId: cartItemId);
   }
 }

@@ -4,27 +4,20 @@ import 'package:you_cook/core/strings/api/api_url.dart';
 import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/core/widgets/go_elevated_btn.dart';
-import 'package:you_cook/features/relish/data/models/product_model.dart';
 import 'package:you_cook/features/relish/domain/entities/kitchen.dart';
 import 'package:you_cook/features/relish/presentation/pages/cart/cart_screen.dart';
-import 'package:you_cook/features/relish/presentation/pages/order/order_screen.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/app_bars.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/icon_with_background.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/rating_builder_with_number.dart';
 
-class AddToCart extends StatefulWidget {
+class AddToCart extends StatelessWidget {
   final int productIndex;
   final Kitchen kitchen;
 
   const AddToCart({Key? key, required this.productIndex, required this.kitchen})
       : super(key: key);
 
-  @override
-  State<AddToCart> createState() => _AddToCartState();
-}
-
-class _AddToCartState extends State<AddToCart> {
   final _styleTxt = const TextStyle(
     color: greyColor,
     fontSize: 10,
@@ -33,22 +26,13 @@ class _AddToCartState extends State<AddToCart> {
   );
 
   @override
-  void initState() {
-    Controllers.selectedVariableController.updateProductQuantity(productQty: 1
-        // Controllers
-        //     .productController.products[widget.productIndex].productQuantity!,
-        );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBars.buildCartScreenAppbar(
             title: Controllers
-                .productController.products[widget.productIndex].productNameAr,
+                .productController.products[productIndex].productNameAr,
             context: context,
             leading:
                 AppBars.leadingDrawerInAppBar(context: context, iconSize: 22),
@@ -91,22 +75,33 @@ class _AddToCartState extends State<AddToCart> {
               child: GoElevatedBtn(
                   onPressed: () {
                     Controllers.cartController.addProduct(
+                        context: context,
                         product: Controllers
-                            .productController.products[widget.productIndex],
-                        price: Controllers.productController
-                                .products[widget.productIndex].productPrice *
-                            Controllers.selectedVariableController
-                                .selectedProductQuantity.value,
+                            .productController.products[productIndex],
+                        price:
+                            Controllers.productController.products[productIndex].productPrice *
+                                Controllers.selectedVariableController
+                                    .selectedProductQuantity.value,
                         quantity: Controllers.selectedVariableController
-                            .selectedProductQuantity.value);
+                            .selectedProductQuantity.value,
+                        discount: (Controllers.offerController.offers.where((offer) => offer.productId == Controllers.productController.products[productIndex].productId).isNotEmpty)
+                            ? Controllers.offerController.offers
+                                    .where((offer) =>
+                                        offer.productId ==
+                                        Controllers.productController
+                                            .products[productIndex].productId)
+                                    .single
+                                    .discount *
+                                Controllers.selectedVariableController.selectedProductQuantity.value
+                            : 0.0);
 
                     Controllers.cartController.updatePriceOfCart(
                         price: Controllers.productController
-                                .products[widget.productIndex].productPrice *
+                                .products[productIndex].productPrice *
                             Controllers.selectedVariableController
                                 .selectedProductQuantity.value);
 
-                    Navigator.pushReplacement(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Home(
@@ -135,8 +130,8 @@ class _AddToCartState extends State<AddToCart> {
           image: DecorationImage(
               image: NetworkImage(
                 ApiUrl.STORAGE_URL +
-                    Controllers.productController.products[widget.productIndex]
-                        .productImage,
+                    Controllers
+                        .productController.products[productIndex].productImage,
               ),
               fit: BoxFit.cover)),
     );
@@ -149,11 +144,10 @@ class _AddToCartState extends State<AddToCart> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          Controllers
-              .productController.products[widget.productIndex].productNameAr,
+          Controllers.productController.products[productIndex].productNameAr,
           style: Theme.of(context).textTheme.bodyText1,
         ),
-        Text(widget.kitchen.kitchenNameAr, style: _styleTxt),
+        Text(kitchen.kitchenNameAr, style: _styleTxt),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -177,8 +171,8 @@ class _AddToCartState extends State<AddToCart> {
           height: 3,
         ),
         Text(
-          Controllers.productController.products[widget.productIndex]
-              .productDescriptionAr,
+          Controllers
+              .productController.products[productIndex].productDescriptionAr,
           style: _styleTxt,
         ),
       ],
@@ -190,7 +184,7 @@ class _AddToCartState extends State<AddToCart> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          '${Controllers.productController.products[widget.productIndex].productPrice.toString()} ريالاً',
+          '${Controllers.productController.products[productIndex].productPrice.toString()} ريالاً',
           style: const TextStyle(
             color: redColor,
             fontSize: 17,
@@ -221,8 +215,8 @@ class _AddToCartState extends State<AddToCart> {
                     onPressed: () {
                       Controllers.selectedVariableController
                           .increaseProductQuantity();
-                      Controllers.productController
-                              .products[widget.productIndex].productQuantity =
+                      Controllers.productController.products[productIndex]
+                              .productQuantity =
                           Controllers.selectedVariableController
                               .selectedProductQuantity.value;
                     }),

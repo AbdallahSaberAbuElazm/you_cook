@@ -6,7 +6,8 @@ import 'package:you_cook/core/error/exception.dart';
 import 'package:you_cook/core/strings/api/api_url.dart';
 import 'package:you_cook/core/util/hive_boxes.dart';
 import 'package:you_cook/core/util/return_data_source.dart';
-import 'package:you_cook/features/relish/data/models/user_service.dart';
+import 'package:you_cook/core/util/util.dart';
+import 'package:you_cook/features/relish/data/models/user_service_model.dart';
 import 'package:you_cook/features/relish/presentation/pages/auth/login_relish.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';
@@ -17,6 +18,8 @@ abstract class UserServiceRemoteDataSourceImpl {
   Future<UserServiceModel> loginUser(
       {required String email, required String password});
   Future<void> logoutUser(String accesstoken);
+  Future<UserServiceModel> updateUserProfile(
+      {required Map<String, dynamic> userData});
 }
 
 class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
@@ -46,6 +49,7 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
           UserServiceModel.fromJson(bodyData['data']['user']);
       HiveBoxes.setUserData(userServiceModel: user);
       HiveBoxes.setUserToken(userToken: bodyData['data']['token']);
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(recentPage: const RelishScreen(), selectedIndex: 0)));
       Get.off(() => Home(recentPage: const RelishScreen(), selectedIndex: 0));
       return user;
     } else {
@@ -87,6 +91,36 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
       final responseJson = json.decode(response.body);
       // Get.off(() => Home(recentPage: const RelishScreen(), selectedIndex: 0));
       Get.off(() => const LoginRelish());
+      return HiveBoxes.setUserToken(userToken: responseJson['token']);
+    });
+  }
+
+  @override
+  Future<UserServiceModel> updateUserProfile(
+      {required Map<String, dynamic> userData}) async {
+    var body = {
+      'first_name': userData['userName'],
+      'email': userData['email'],
+      'phone': userData['phoneNumber'],
+      'phone_ext': userData['address'],
+      'last_name': userData['area'],
+      'address': userData['address'],
+      'gender': 'male',
+      'type': 'user',
+    };
+    var response = await client.put(Uri.parse(ApiUrl.UPDATE_USER_PROFILE),
+        body: json.encode(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${HiveBoxes.getUserToken()}',
+        });
+
+    return await ReturnDataSource.checkStatusCodeForDeleteUpdateData(
+            response: response, statusCode: 200)
+        .then((value) {
+      final responseJson = json.decode(response.body);
+      print('user profile update is $responseJson');
+
       return HiveBoxes.setUserToken(userToken: responseJson['token']);
     });
   }

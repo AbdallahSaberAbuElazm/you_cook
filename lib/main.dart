@@ -1,12 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:you_cook/core/styles/app_theme.dart';
-import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_controller/selected_variable_controller.dart';
 import 'package:you_cook/features/relish/presentation/controllers/cart_controller.dart';
 import 'package:you_cook/features/relish/presentation/controllers/category_controller.dart';
@@ -16,6 +13,9 @@ import 'package:you_cook/features/relish/presentation/controllers/offer_controll
 import 'package:you_cook/features/relish/presentation/controllers/order_controller.dart';
 import 'package:you_cook/features/relish/presentation/controllers/product_controller.dart';
 import 'package:you_cook/features/relish/presentation/controllers/user_controller.dart';
+import 'package:you_cook/core/config/init_hive_boxes_configuration.dart';
+import 'package:you_cook/core/styles/app_theme.dart';
+import 'package:you_cook/core/config/config_loading_toast.dart';
 import 'package:you_cook/features/splash/presentation/splash_screen.dart';
 import 'injection_container.dart' as di;
 
@@ -25,22 +25,10 @@ void main() async {
   //get app directory
   Directory dir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(dir.path);
-  await initHiveBoxes();
+  await InitHiveBoxesConfiguration.initHiveBoxes();
   getControllers();
-  configLoading();
+  ConfigLoadingToast.configLoading();
   runApp(const YouCook());
-}
-
-Future initHiveBoxes() async {
-  await Hive.openBox<String>('userType');
-  await Hive.openBox<int>('userId');
-  await Hive.openBox<bool>('firstOpen');
-  await Hive.openBox<String>('userToken');
-  await Hive.openBox<String>('userName');
-  await Hive.openBox<String>('email');
-  await Hive.openBox<String>('phoneNumber');
-  await Hive.openBox<String>('userArea');
-  await Hive.openBox<String>('userAddress');
 }
 
 getControllers() {
@@ -72,7 +60,8 @@ getControllers() {
       () => CartController(
           addCartUsecase: di.sl(),
           getAllCartUsecase: di.sl(),
-          deleteCartUsecase: di.sl()),
+          deleteCartItemUsecase: di.sl(),
+          getSpecificCartUsecase: di.sl()),
       fenix: true);
   Get.lazyPut<OrderController>(
       () => OrderController(
@@ -88,24 +77,6 @@ getControllers() {
             deleteFavouriteUsecase: di.sl(),
           ),
       fenix: true);
-}
-
-void configLoading() {
-  EasyLoading.instance
-        ..displayDuration = const Duration(milliseconds: 2000)
-        ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-        ..loadingStyle = EasyLoadingStyle.custom
-        ..indicatorSize = 45.0
-        ..radius = 10.0
-        ..progressColor = Colors.white
-        ..backgroundColor = redColor
-        ..indicatorColor = Colors.white
-        ..textColor = Colors.white
-        ..maskColor = Colors.transparent
-        ..userInteractions = true
-        ..dismissOnTap = false
-      // ..customAnimation = CustomAnimation()
-      ;
 }
 
 class YouCook extends StatelessWidget {
