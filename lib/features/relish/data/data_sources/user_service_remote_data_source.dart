@@ -6,7 +6,6 @@ import 'package:you_cook/core/error/exception.dart';
 import 'package:you_cook/core/strings/api/api_url.dart';
 import 'package:you_cook/core/util/hive_boxes.dart';
 import 'package:you_cook/core/util/return_data_source.dart';
-import 'package:you_cook/core/util/util.dart';
 import 'package:you_cook/features/relish/data/models/user_service_model.dart';
 import 'package:you_cook/features/relish/presentation/pages/auth/login_relish.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
@@ -119,7 +118,7 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
             response: response, statusCode: 200)
         .then((value) {
       final responseJson = json.decode(response.body);
-      print('user profile update is $responseJson');
+      // print('user profile update is $responseJson');
 
       return HiveBoxes.setUserToken(userToken: responseJson['token']);
     });
