@@ -2,9 +2,10 @@ import 'package:you_cook/features/relish/domain/entities/order.dart';
 
 class OrderModel extends Orders {
   OrderModel(
-      {required super.userId,
+      {super.orderId,
+      required super.userId,
       required super.addressId,
-      required super.cartId,
+      super.cartId,
       required super.status,
       required super.type,
       required super.price,
@@ -18,6 +19,7 @@ class OrderModel extends Orders {
 
   static OrderModel fromJson(Map<String, dynamic> jsonObject) {
     return OrderModel(
+      orderId: jsonObject['id'],
       userId: jsonObject['user'],
       // couponId: jsonObject['id'],
       addressId: jsonObject['address'],

@@ -16,10 +16,8 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          return await Get.to(
-            () => Get.off(
-                () => Home(recentPage: const RelishScreen(), selectedIndex: 2)),
-          );
+          return await Get.off(
+              () => Home(recentPage: const RelishScreen(), selectedIndex: 2));
         },
         child: Directionality(
           textDirection: TextDirection.rtl,
@@ -42,27 +40,25 @@ class CartScreen extends StatelessWidget {
               right: MediaQuery.of(context).size.width / 30),
           child: ListView(
             children: [
-              // const ListOfCarts(),
-              // Expanded(
-              //   child: Padding(
-              //     padding: EdgeInsets.only(
-              //       bottom: MediaQuery.of(context).size.height / 60,
-              //     ),
-              //     child: Align(
-              //       alignment: Alignment.bottomCenter,
-              //       child: GoElevatedBtn(
-              //           onPressed: () {
-              //             Controllers.cartController.addCartToOrder();
-              //             Get.to(() => Home(
-              //                 recentPage: const UserOrders(),
-              //                 selectedIndex: 2));
-              //           },
-              //           title: 'التالي',
-              //           btnColor: redColor,
-              //           textColor: whiteColor),
-              //     ),
-              //   ),
-              // )
+              const ListOfCarts(),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 100,
+                  bottom: MediaQuery.of(context).size.height / 80,
+                ),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: GoElevatedBtn(
+                      onPressed: () {
+                        Controllers.cartController.addCartToOrder();
+                        Get.to(() => Home(
+                            recentPage: const UserOrders(), selectedIndex: 2));
+                      },
+                      title: 'التالي',
+                      btnColor: redColor,
+                      textColor: whiteColor),
+                ),
+              ),
             ],
           )),
     );

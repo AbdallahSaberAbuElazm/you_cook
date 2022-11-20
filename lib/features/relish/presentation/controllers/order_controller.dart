@@ -43,4 +43,8 @@ class OrderController extends GetxController {
       currentOrders.value = ordersData;
     });
   }
+
+  addOrder({required Orders order}) {
+    addOrderUsecase(order: order);
+  }
 }

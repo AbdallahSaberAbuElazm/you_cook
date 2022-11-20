@@ -36,7 +36,7 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   @override
   Future<Unit> addOrder({required OrderModel orderModel}) async {
     final body = {
-      'user_id': orderModel.userId,
+      'user': orderModel.userId,
       'address': orderModel.addressId,
       'cart_id': orderModel.cartId,
       'status': orderModel.status,
@@ -52,7 +52,11 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
     };
 
     final response = await client.post(Uri.parse(ApiUrl.SEND_ORDER_URL),
-        body: json.encode(body));
+        body: json.encode(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${HiveBoxes.getUserToken()}',
+        });
     if (response.statusCode == 201) {
       return Future.value(unit);
     } else {

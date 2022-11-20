@@ -5,7 +5,7 @@ class Orders extends Equatable {
   final int userId;
   // final int couponId;
   final int addressId;
-  final int cartId;
+  int? cartId;
   final String status;
   final String type;
   final double price;
@@ -24,7 +24,7 @@ class Orders extends Equatable {
     required this.userId,
     // required this.couponId,
     required this.addressId,
-    required this.cartId,
+    this.cartId,
     required this.status,
     required this.type,
     required this.price,

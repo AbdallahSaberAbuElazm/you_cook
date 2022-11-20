@@ -31,12 +31,12 @@ class CartController extends GetxController {
 
   @override
   void onInit() {
-    fetchAllCategoriesFromRemoteData();
+    fetchAllCartsFromRemoteData();
     super.onInit();
   }
 
   // Future<Either<String, List<Country>>>
-  fetchAllCategoriesFromRemoteData() async {
+  fetchAllCartsFromRemoteData() async {
     try {
       isLoading(true);
       var cartsData = await getAllCartUsecase();
@@ -46,12 +46,22 @@ class CartController extends GetxController {
     }
   }
 
-  _mapFailureOrCarts(Either<Failure, List<Cart>> either) {
+  _mapFailureOrCarts(Either<Failure, Cart> either) {
     return either.fold((failure) {
       // failureTxt.value = mapFailureToMessage(failure);
     }, (cartsData) {
-      cartWithItems.value = cartsData;
+      updateCart(cart: cartsData);
     });
+  }
+
+  updateCart({required Cart cart}) {
+    cartWithItems.clear();
+    cartWithItems.add(cart);
+    cartItems.clear();
+    for (var cartItem in cart.cartItems) {
+      cartItems.add(cartItem);
+    }
+    update();
   }
 
   updatePriceOfCart({required double price}) {
@@ -59,6 +69,7 @@ class CartController extends GetxController {
     update();
   }
 
+  // add product to cart items list
   void addProduct(
       {required Product product,
       required double price,
@@ -77,14 +88,18 @@ class CartController extends GetxController {
           // discount: discount,
           // totalPrice: price - discount,
           quantity: quantity));
-      addCartUsecase(
-        cartItem: CartItems(
-            price: price,
-            // discount: discount,
-            product: product,
-            // totalPrice: price - discount,
-            quantity: quantity),
-      ).then((value) => fetchAllCategoriesFromRemoteData());
+
+      //! add cart item to cart
+      // addCartUsecase(
+      //   cartItem: CartItems(
+      //       price: price,
+      //       // discount: discount,
+      //       product: product,
+      //       // totalPrice: price - discount,
+      //       quantity: quantity),
+      // ).then((value) {
+      //   fetchAllCartsFromRemoteData();
+      // });
     }
   }
 
@@ -93,45 +108,75 @@ class CartController extends GetxController {
     return _products.length;
   }
 
+  // remove product from cart items list
   void removeProduct(Product product) {
-    if (_products.containsKey(product)
-        //  && _products[product] == 1
-        ) {
-      _products.removeWhere((key, value) => key == product);
-      final removeCartItem = cartItems.indexWhere(
-          (cartItem) => cartItem.product.productId == product.productId);
-      cartItems.removeAt(removeCartItem);
-      deleteCartItemUsecase(
-          cartItemId: cartItems
-              .where((cartItem) => product.productId == product.productId)
-              .single
-              .cartItemId!);
-    } else {
-      // _products[product] -= 1;
-    }
+    print('delete cart item : ');
+    // _products.removeWhere((key, value) => key == product);
+    final removeCartItem =
+        // cartWithItems[0].
+        cartItems.indexWhere(
+            (cartItem) => cartItem.product.productId == product.productId);
+    // print('remove cart item id :$removeCartItem');
+    // cartWithItems[0].
+    cartItems.removeAt(removeCartItem);
+    // print(
+    //     'cart item id : ${cartWithItems[0].cartItems.where((cartItem) => product.productId == product.productId).single.cartItemId!}');
+    //! delete cart item from cart
+    // deleteCartItemUsecase(
+    //     cartItemId: cartWithItems[0]
+    //         .cartItems
+    //         .where((cartItem) => product.productId == product.productId)
+    //         .single
+    //         .cartItemId!);
+
+    // fetchAllCartsFromRemoteData();
   }
 
+  // get price of cart
   getAllPriceOffCart() {
     priceCart.value = 0.0;
-    for (var cartData in cartWithItems) {
-      priceCart.value += cartData.totalPrice;
+    for (var cartItem in cartItems) {
+      priceCart.value += cartItem.price;
+      addCartUsecase(
+        cartItem: CartItems(
+            price: cartItem.price,
+            // discount: discount,
+            product: cartItem.product,
+            // totalPrice: price - discount,
+            quantity: cartItem.quantity),
+      ).then((value) {
+        fetchAllCartsFromRemoteData();
+      });
     }
     update();
   }
 
-  decreasePriceWhenDeleteElement({required double quantity}) {
-    priceCart.value -= quantity;
+  // change (decrease) price when delete item from cart
+  decreasePriceWhenDeleteElement(
+      {required double quantity, required double price}) {
+    priceCart.value -= quantity * price;
     update();
   }
 
+  // add cart to order
   addCartToOrder() {
-    var price = 0.0;
-    for (var item in cartItems) {
-      price += item.price;
-    }
+    // var price = 0.0;
+    // for (var item in cartItems) {
+    //   price += item.price;
+    // }
+    getAllPriceOffCart();
     cartOrder.clear();
+
     cartOrder.add(Cart(
-        price: price, discount: 0.0, totalPrice: price, cartItems: cartItems));
+        cartId: 0,
+        price: priceCart.value,
+        discount: 0.0,
+        totalPrice: priceCart.value,
+        cartItems: cartItems));
+
     update();
   }
+
+  //update quantity of cart item in cart
+  updateCartItem() {}
 }

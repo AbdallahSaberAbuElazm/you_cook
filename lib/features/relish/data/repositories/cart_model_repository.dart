@@ -16,7 +16,7 @@ class CartModelRepository implements CartRepository {
       {required this.cartRemoteDataSource, required this.networkInfo});
 
   @override
-  Future<Either<Failure, List<Cart>>> getAllCarts() async {
+  Future<Either<Failure, Cart>> getAllCarts() async {
     if (await networkInfo.isConnected) {
       try {
         return Right(await cartRemoteDataSource.getAllUserCart());

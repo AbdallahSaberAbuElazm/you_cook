@@ -7,11 +7,9 @@ import 'package:you_cook/core/util/hive_boxes.dart';
 import 'package:you_cook/core/util/return_data_source.dart';
 import 'package:you_cook/features/relish/data/models/cart_items_model.dart';
 import 'package:you_cook/features/relish/data/models/cart_model.dart';
-import 'package:you_cook/features/relish/data/models/category_model.dart';
-import 'package:you_cook/features/relish/domain/entities/cart_items.dart';
 
 abstract class CartRemoteDataSource {
-  Future<List<CartModel>> getAllUserCart();
+  Future<CartModel> getAllUserCart();
   Future<CartModel> getSpecificCart({required int cartId});
   Future<Unit> addCart({required CartItemsModel cartItem});
   Future<Unit> deleteCart({required int cartItemsId});
@@ -22,7 +20,7 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
   CartRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<List<CartModel>> getAllUserCart() async {
+  Future<CartModel> getAllUserCart() async {
     var response = await client.get(Uri.parse(ApiUrl.CART_URL), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${HiveBoxes.getUserToken()}',
@@ -30,25 +28,24 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
 
-      print('body of cart is ${body['data']['items']}');
       List<CartItemsModel> cartItems = body['data']['items']
           .map<CartItemsModel>(
               (cartItems) => CartItemsModel.fromJson(cartItems))
           .toList();
-      print('cartitems is $cartItems');
-      List<CartModel> carts =
-          body['data'].map<CartModel>((Map<String, dynamic> cartModel) {
-        return CartModel.fromJson({
-          'items': cartModel['items'],
-          'cart_id': cartModel['cart_id'],
-          'price': cartModel['price'],
-          'discount': cartModel['discount'],
-          'total_price': cartModel['total_price'],
-        });
-      }).toList();
-      // print('carts list is $carts');
-      // print('body of cart model is ${carts.map((e) => e.cartItems)}');
-      return carts;
+      print(CartModel.fromJson({
+        'items': cartItems,
+        'cart_id': body['data']['cart_id'],
+        'price': body['data']['price'],
+        'discount': body['data']['discount'],
+        'total_price': body['data']['total_price'],
+      }));
+      return CartModel.fromJson({
+        'items': cartItems,
+        'cart_id': body['data']['cart_id'],
+        'price': body['data']['price'],
+        'discount': body['data']['discount'],
+        'total_price': body['data']['total_price'],
+      });
     } else {
       throw ServerException();
     }

@@ -5,6 +5,7 @@ import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/widgets/custom_search_field.dart';
 import 'package:you_cook/core/widgets/logo_widget.dart';
 import 'package:you_cook/features/relish/presentation/pages/cart/cart_screen.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
 
 class AppBars {
   // app bar for relish screen
@@ -67,7 +68,11 @@ class AppBars {
       actions: [
         IconButton(
             onPressed: () {
-              Get.to(() => const CartScreen());
+              Navigator.push(
+                  (context),
+                  MaterialPageRoute(
+                      builder: (context) => Home(
+                          recentPage: const CartScreen(), selectedIndex: 2)));
             },
             icon: const SizedBox(
                 width: 32,
