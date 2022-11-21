@@ -8,6 +8,7 @@ import 'package:you_cook/features/relish/domain/entities/user_service.dart';
 import 'package:you_cook/features/relish/domain/use_cases/user_usecase/login_user_usecase.dart';
 import 'package:you_cook/features/relish/domain/use_cases/user_usecase/logout_user_usecase.dart';
 import 'package:you_cook/features/relish/domain/use_cases/user_usecase/register_user_usecase.dart';
+import 'package:you_cook/features/relish/presentation/controllers/cart_controller.dart';
 
 class UserController extends GetxController {
   final users = <UserService>[].obs;
@@ -75,6 +76,7 @@ class UserController extends GetxController {
       failureTxt.value = mapFailureToMessage(failure);
     }, (userData) {
       failureTxt.value = '';
+      Get.find<CartController>();
     });
   }
 }

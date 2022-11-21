@@ -57,7 +57,8 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${HiveBoxes.getUserToken()}',
         });
-    if (response.statusCode == 201) {
+    print('user token is ${HiveBoxes.getUserToken()}');
+    if (response.statusCode == 200) {
       return Future.value(unit);
     } else {
       throw ServerException();

@@ -18,5 +18,5 @@ class ApiUrl {
   static const String SLIDERS_URL = '${BASE_URL}sliders/';
   static const String FAVOURITES_URL = '${BASE_URL}favourites';
   static const String ORDERS_URL = '${BASE_URL}orders/get_all/';
-  static const String SEND_ORDER_URL = '${BASE_URL}orders/send/';
+  static const String SEND_ORDER_URL = '${BASE_URL}orders/send';
 }

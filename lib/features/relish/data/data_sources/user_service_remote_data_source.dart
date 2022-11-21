@@ -8,7 +8,7 @@ import 'package:you_cook/core/util/hive_boxes.dart';
 import 'package:you_cook/core/util/return_data_source.dart';
 import 'package:you_cook/features/relish/data/models/user_service_model.dart';
 import 'package:you_cook/features/relish/presentation/pages/auth/login_relish.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';
 
 abstract class UserServiceRemoteDataSourceImpl {
@@ -49,7 +49,8 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
       HiveBoxes.setUserData(userServiceModel: user);
       HiveBoxes.setUserToken(userToken: bodyData['data']['token']);
       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(recentPage: const RelishScreen(), selectedIndex: 0)));
-      Get.off(() => Home(recentPage: const RelishScreen(), selectedIndex: 0));
+      Get.off(
+          () => RelishHome(recentPage: const RelishScreen(), selectedIndex: 0));
       return user;
     } else {
       throw ServerException();
@@ -86,11 +87,11 @@ class UserServiceRemoteDataSource implements UserServiceRemoteDataSourceImpl {
 
     return await ReturnDataSource.checkStatusCodeForDeleteUpdateData(
             response: response, statusCode: 201)
-        .then((value) {
-      final responseJson = json.decode(response.body);
+        .then((value) async {
+      // final responseJson = json.decode(response.body);
       // Get.off(() => Home(recentPage: const RelishScreen(), selectedIndex: 0));
-      Get.off(() => const LoginRelish());
-      return HiveBoxes.setUserToken(userToken: responseJson['token']);
+      return await Get.off(() => const LoginRelish());
+      // return HiveBoxes.setUserToken(userToken: responseJson['token']);
     });
   }
 

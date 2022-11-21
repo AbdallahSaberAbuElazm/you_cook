@@ -6,7 +6,7 @@ import 'package:you_cook/core/widgets/custom_text_form_field.dart';
 import 'package:you_cook/core/widgets/go_elevated_btn.dart';
 import 'package:you_cook/core/widgets/password_form_field.dart';
 import 'package:you_cook/features/relish/presentation/pages/auth/register_relish.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';
 
 class LoginRelish extends StatefulWidget {
@@ -162,7 +162,7 @@ class _LoginRelishState extends State<LoginRelish> {
                                                 _drawText(
                                                     text: 'الدخول كزائر',
                                                     onPressed: () {
-                                                      Get.off(() => Home(
+                                                      Get.off(() => RelishHome(
                                                           recentPage:
                                                               const RelishScreen(),
                                                           selectedIndex: 0));

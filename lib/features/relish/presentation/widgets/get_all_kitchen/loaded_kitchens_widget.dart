@@ -5,7 +5,7 @@ import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/core/widgets/rating_builder.dart';
 import 'package:you_cook/features/relish/domain/entities/kitchen.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/pages/kitchens/kitchen_details.dart';
 
 class LoadedKitchensWidget extends StatelessWidget {
@@ -30,7 +30,7 @@ class LoadedKitchensWidget extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Home(
+                          builder: (context) => RelishHome(
                               recentPage: KitchenDetails(index: index),
                               selectedIndex: 0)));
                 },

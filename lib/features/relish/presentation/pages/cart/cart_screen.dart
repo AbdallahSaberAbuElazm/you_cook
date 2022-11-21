@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/core/widgets/go_elevated_btn.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/user_orders.dart';
 import 'package:you_cook/features/relish/presentation/widgets/carts/list_of_carts.dart';
@@ -16,8 +16,8 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          return await Get.off(
-              () => Home(recentPage: const RelishScreen(), selectedIndex: 2));
+          return await Get.off(() =>
+              RelishHome(recentPage: const RelishScreen(), selectedIndex: 2));
         },
         child: Directionality(
           textDirection: TextDirection.rtl,
@@ -51,7 +51,7 @@ class CartScreen extends StatelessWidget {
                   child: GoElevatedBtn(
                       onPressed: () {
                         Controllers.cartController.addCartToOrder();
-                        Get.to(() => Home(
+                        Get.to(() => RelishHome(
                             recentPage: const UserOrders(), selectedIndex: 2));
                       },
                       title: 'التالي',

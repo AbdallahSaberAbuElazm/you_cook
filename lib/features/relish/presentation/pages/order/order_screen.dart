@@ -3,11 +3,8 @@ import 'package:get/get.dart';
 import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/hive_boxes.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
-import 'package:you_cook/core/util/util.dart';
 import 'package:you_cook/core/widgets/go_elevated_btn.dart';
 import 'package:you_cook/features/relish/domain/entities/order.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';
 import 'package:you_cook/features/relish/presentation/widgets/carts/choose_payment_card.dart';
 import 'package:you_cook/features/relish/presentation/widgets/orders/current_order.dart';
 import 'package:you_cook/features/relish/presentation/widgets/orders/get_list_of_orders.dart';
@@ -27,6 +24,7 @@ class _OrderScreenState extends State<OrderScreen> {
   void initState() {
     currentOrders = Controllers.orderController.currentOrders;
     previousOrders = Controllers.orderController.previousOrders;
+    Controllers.orderController.getPriceOfOrder();
 
     super.initState();
   }
@@ -37,7 +35,7 @@ class _OrderScreenState extends State<OrderScreen> {
         textDirection: TextDirection.rtl,
         child: ListView(children: [
           Obx(() => ListOfOrders(
-              list1: Controllers.cartController.cartOrder[0].cartItems,
+              list1: Controllers.orderController.orderItems,
               // Controllers.cartController.cartOrder[0].cartItems,
               list2: previousOrders!,
               compare1: Controllers.selectedVariableController
@@ -51,7 +49,9 @@ class _OrderScreenState extends State<OrderScreen> {
                   Controllers.cartController.cartOrder[0].cartItems.length
               // : previousOrders!.length,
               )),
-          _infoOfCurrentOrder(),
+          (Controllers.orderController.orderItems.isNotEmpty)
+              ? _infoOfCurrentOrder()
+              : const SizedBox(),
         ]));
   }
 
@@ -99,13 +99,15 @@ class _OrderScreenState extends State<OrderScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 50,
           ),
-          _priceRowDetail(
+          Obx(() => _priceRowDetail(
               title: 'الإجمالي',
-              price: Controllers.cartController.cartOrder[0].price),
+              price: Controllers.orderController.orderPrice.value
+              //  Controllers.cartController.cartOrder[0].price
+              )),
           _priceRowDetail(title: 'تكلفة التوصيل', price: 0.0),
-          _drawTotalPrice(
+          Obx(() => _drawTotalPrice(
               title: 'المجموع',
-              price: Controllers.cartController.cartOrder[0].price),
+              price: Controllers.orderController.orderPrice.value)),
           Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height / 50,
@@ -116,11 +118,12 @@ class _OrderScreenState extends State<OrderScreen> {
               child: GoElevatedBtn(
                   onPressed: () {
                     Controllers.orderController.addOrder(
+                        context: context,
                         order: Orders(
                             userId: HiveBoxes.getUserId()!,
                             addressId: 0,
-                            cartId:
-                                Controllers.cartController.cartOrder[0].cartId,
+                            cartId: Controllers
+                                .cartController.cartWithItems[0].cartId,
                             status: 'pending',
                             type: '',
                             price:
@@ -134,17 +137,6 @@ class _OrderScreenState extends State<OrderScreen> {
                             isDeposit: false,
                             deliveryMethod: '',
                             paymentMethod: ''));
-                    Util.snackBar(context: context, msg: 'تم ارسال الطلب');
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Home(
-                                recentPage: const RelishScreen(),
-                                selectedIndex: 0))).then((value) {
-                      Controllers.cartController.cartItems.clear();
-                      Controllers.cartController.cartOrder.clear();
-                      Controllers.cartController.cartWithItems.clear();
-                    });
                   },
                   title: 'اطلب الآن',
                   btnColor: redColor,

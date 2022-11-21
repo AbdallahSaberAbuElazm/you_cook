@@ -1,12 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/hive_boxes.dart';
-import 'package:you_cook/features/relish/presentation/pages/auth/register_relish.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';
 import 'package:you_cook/features/relish/presentation/pages/home_page.dart';
 import 'package:you_cook/features/splash/presentation/onboarding/onboarding_screen.dart';
 

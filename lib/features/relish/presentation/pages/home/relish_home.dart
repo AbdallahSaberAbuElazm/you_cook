@@ -6,16 +6,17 @@ import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.d
 import 'package:you_cook/features/relish/presentation/pages/home/user_orders.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/wish_list.dart';
 
-class Home extends StatefulWidget {
+class RelishHome extends StatefulWidget {
   Widget recentPage;
   int selectedIndex;
-  Home({super.key, required this.recentPage, required this.selectedIndex});
+  RelishHome(
+      {super.key, required this.recentPage, required this.selectedIndex});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<RelishHome> createState() => _RelishHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _RelishHomeState extends State<RelishHome> {
   List<Widget> pages = [
     const RelishScreen(),
     const ProfileScreen(),

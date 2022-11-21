@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:you_cook/core/strings/api/api_url.dart';
 import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/pages/home/relish_screen.dart';
 import 'package:you_cook/core/widgets/custom_text_form_field.dart';
 import 'package:you_cook/core/widgets/go_elevated_btn.dart';
@@ -224,7 +224,7 @@ class _RegisterRelishState extends State<RegisterRelish> {
                                         children: [
                                           GoElevatedBtn(
                                               onPressed: () {
-                                                Get.off(() => Home(
+                                                Get.off(() => RelishHome(
                                                     recentPage:
                                                         const RelishScreen(),
                                                     selectedIndex: 0));

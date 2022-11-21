@@ -32,13 +32,13 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
           .map<CartItemsModel>(
               (cartItems) => CartItemsModel.fromJson(cartItems))
           .toList();
-      print(CartModel.fromJson({
-        'items': cartItems,
-        'cart_id': body['data']['cart_id'],
-        'price': body['data']['price'],
-        'discount': body['data']['discount'],
-        'total_price': body['data']['total_price'],
-      }));
+      // print(CartModel.fromJson({
+      //   'items': cartItems,
+      //   'cart_id': body['data']['cart_id'],
+      //   'price': body['data']['price'],
+      //   'discount': body['data']['discount'],
+      //   'total_price': body['data']['total_price'],
+      // }));
       return CartModel.fromJson({
         'items': cartItems,
         'cart_id': body['data']['cart_id'],

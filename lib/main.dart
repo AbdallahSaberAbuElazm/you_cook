@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -92,10 +93,12 @@ class YouCook extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: GetMaterialApp(
-          theme: theme(),
-          debugShowCheckedModeBanner: false,
-          title: 'YouCook',
-          home: const SplashScreen()),
+        theme: theme(),
+        debugShowCheckedModeBanner: false,
+        title: 'YouCook',
+        home: const SplashScreen(),
+        builder: EasyLoading.init(),
+      ),
     );
   }
 }

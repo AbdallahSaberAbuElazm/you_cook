@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 import 'package:you_cook/core/error/failure.dart';
+import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/core/util/util.dart';
 import 'package:you_cook/features/relish/domain/entities/cart.dart';
 import 'package:you_cook/features/relish/domain/entities/cart_items.dart';
@@ -39,6 +40,8 @@ class CartController extends GetxController {
   fetchAllCartsFromRemoteData() async {
     try {
       isLoading(true);
+      cartWithItems.clear();
+      cartItems.clear();
       var cartsData = await getAllCartUsecase();
       _mapFailureOrCarts(cartsData);
     } finally {
@@ -151,6 +154,24 @@ class CartController extends GetxController {
     update();
   }
 
+  addCart({
+    required List<CartItems> cartItemsForOrder,
+  }) {
+    for (var cartItem in cartItemsForOrder) {
+      cartItem.status = 2;
+      addCartUsecase(
+        cartItem: CartItems(
+            price: cartItem.price,
+            // discount: discount,
+            product: cartItem.product,
+            // totalPrice: price - discount,
+            quantity: cartItem.quantity),
+      ).then((value) {
+        fetchAllCartsFromRemoteData();
+      });
+    }
+  }
+
   // change (decrease) price when delete item from cart
   decreasePriceWhenDeleteElement(
       {required double quantity, required double price}) {
@@ -166,13 +187,15 @@ class CartController extends GetxController {
     // }
     getAllPriceOffCart();
     cartOrder.clear();
+    Controllers.orderController.updateOrderItems(orderCartItems: cartItems);
+    cartItems.clear();
 
     cartOrder.add(Cart(
-        cartId: 0,
+        cartId: cartWithItems[0].cartId,
         price: priceCart.value,
         discount: 0.0,
         totalPrice: priceCart.value,
-        cartItems: cartItems));
+        cartItems: cartWithItems[0].cartItems));
 
     update();
   }

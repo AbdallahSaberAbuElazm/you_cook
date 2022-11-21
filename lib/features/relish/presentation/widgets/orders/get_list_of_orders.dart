@@ -6,7 +6,7 @@ import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/icon_with_background.dart';
 
-class ListOfOrders extends StatelessWidget {
+class ListOfOrders extends StatefulWidget {
   final List list1;
   final List list2;
   final int itemCount;
@@ -23,6 +23,11 @@ class ListOfOrders extends StatelessWidget {
   });
 
   @override
+  State<ListOfOrders> createState() => _ListOfOrdersState();
+}
+
+class _ListOfOrdersState extends State<ListOfOrders> {
+  @override
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
         padding: EdgeInsets.zero,
@@ -31,7 +36,7 @@ class ListOfOrders extends StatelessWidget {
         mainAxisSpacing: 7,
         crossAxisSpacing: 20,
         crossAxisCount: 1,
-        itemCount: itemCount,
+        itemCount: widget.itemCount,
         itemBuilder: (context, index) {
           return
               //  InkWell(
@@ -73,9 +78,10 @@ class ListOfOrders extends StatelessWidget {
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(ApiUrl.STORAGE_URL +
-                                      (compare1 == compare2
-                                          ? list1[index].product.productImage
-                                          : list2[index].offerImage)),
+                                      (widget.compare1 == widget.compare2
+                                          ? widget
+                                              .list1[index].product.productImage
+                                          : widget.list2[index].offerImage)),
                                   fit: BoxFit.cover,
                                 ),
                                 borderRadius: const BorderRadius.all(
@@ -98,11 +104,11 @@ class ListOfOrders extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                            compare1 == compare2
-                                                ? list1[index]
-                                                    .product
+                                            widget.compare1 == widget.compare2
+                                                ? widget.list1[index].product
                                                     .productNameAr
-                                                : list2[index].offerTitle,
+                                                : widget
+                                                    .list2[index].offerTitle,
                                             textAlign: TextAlign.start,
                                             style: const TextStyle(
                                                 color: blackColor,
@@ -131,11 +137,11 @@ class ListOfOrders extends StatelessWidget {
                                             MediaQuery.of(context).size.width /
                                                 2,
                                         child: Text(
-                                            compare1 == compare2
-                                                ? list1[index]
-                                                    .product
+                                            widget.compare1 == widget.compare2
+                                                ? widget.list1[index].product
                                                     .productDescriptionAr
-                                                : list2[index].offerDescription,
+                                                : widget.list2[index]
+                                                    .offerDescription,
                                             style: const TextStyle(
                                                 color: greyColor,
                                                 fontWeight: FontWeight.w500,
@@ -156,7 +162,7 @@ class ListOfOrders extends StatelessWidget {
                                           Row(
                                             children: [
                                               Text(
-                                                '${compare1 == compare2 ? list1[index].product.productPrice.toStringAsFixed(2) : list1[index].product.productPrice.toStringAsFixed(2)} ريالاً',
+                                                '${widget.compare1 == widget.compare2 ? widget.list1[index].product.productPrice.toStringAsFixed(2) : widget.list1[index].product.productPrice.toStringAsFixed(2)} ريالاً',
                                                 style: const TextStyle(
                                                     color: redColor,
                                                     fontSize: 11.5,
@@ -205,14 +211,25 @@ class ListOfOrders extends StatelessWidget {
                                                           Controllers
                                                               .selectedVariableController
                                                               .increaseProductQuantity();
+                                                          setState(() {
+                                                            Controllers
+                                                                .orderController
+                                                                .orderItems[
+                                                                    index]
+                                                                .quantity = Controllers
+                                                                    .orderController
+                                                                    .orderItems[
+                                                                        index]
+                                                                    .quantity! +
+                                                                1;
+                                                          });
                                                           Controllers
-                                                                  .productController
-                                                                  .products[index]
-                                                                  .productQuantity =
-                                                              Controllers
-                                                                  .selectedVariableController
-                                                                  .selectedProductQuantity
-                                                                  .value;
+                                                              .orderController
+                                                              .increasePriceOfOrder(
+                                                                  price: widget
+                                                                      .list1[
+                                                                          index]
+                                                                      .price);
                                                         }),
                                                     Padding(
                                                       padding:
@@ -220,19 +237,11 @@ class ListOfOrders extends StatelessWidget {
                                                               left: 10,
                                                               right: 10),
                                                       child: Obx(() => Text(
-                                                            // Controllers
-                                                            //             .productController
-                                                            //             .products[widget.productIndex]
-                                                            //             .productQuantity! >
-                                                            //         0
-                                                            //     ? Controllers.productController
-                                                            //         .products[widget.productIndex].productQuantity
-                                                            //         .toString()
-                                                            //     : '1',
                                                             Controllers
-                                                                .selectedVariableController
-                                                                .selectedProductQuantity
-                                                                .value
+                                                                .orderController
+                                                                .orderItems[
+                                                                    index]
+                                                                .quantity
                                                                 .toString(),
                                                             textAlign: TextAlign
                                                                 .center,
@@ -252,9 +261,25 @@ class ListOfOrders extends StatelessWidget {
                                                         iconColor: redColor,
                                                         iconSize: 20,
                                                         onPressed: () {
+                                                          setState(() {
+                                                            Controllers
+                                                                .orderController
+                                                                .orderItems[
+                                                                    index]
+                                                                .quantity = Controllers
+                                                                    .orderController
+                                                                    .orderItems[
+                                                                        index]
+                                                                    .quantity! -
+                                                                1;
+                                                          });
                                                           Controllers
-                                                              .selectedVariableController
-                                                              .decreaseProductQuantity();
+                                                              .orderController
+                                                              .decreasePriceOfOrder(
+                                                                  price: widget
+                                                                      .list1[
+                                                                          index]
+                                                                      .price);
                                                         }),
                                                   ],
                                                 ),

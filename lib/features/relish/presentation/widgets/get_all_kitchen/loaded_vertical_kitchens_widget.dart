@@ -6,7 +6,7 @@ import 'package:you_cook/core/strings/api/api_url.dart';
 import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/features/relish/presentation/controllers/offer_controller.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/pages/kitchens/kitchen_details.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/rating_builder_with_number.dart';
 
@@ -24,7 +24,7 @@ class LoadedVerticalKitchens extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
             onTap: () {
-              Get.to(() => Home(
+              Get.to(() => RelishHome(
                   recentPage: KitchenDetails(index: index), selectedIndex: 0));
 
               Get.find<OfferController>();

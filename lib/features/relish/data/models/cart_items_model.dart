@@ -8,15 +8,18 @@ class CartItemsModel extends CartItems {
       // required super.discount,
       required super.price,
       // required super.totalPrice,
-      super.quantity});
+      super.quantity,
+      super.status});
 
   static CartItemsModel fromJson(Map<String, dynamic> objectJson) {
     return CartItemsModel(
-        cartItemId: objectJson['id'],
-        product: ProductModel.fromJson(objectJson['product']),
-        price: objectJson['price'].toDouble(),
-        // discount: objectJson['discount'],
-        // totalPrice: objectJson['total_price'],
-        quantity: objectJson['qty']);
+      cartItemId: objectJson['id'],
+      product: ProductModel.fromJson(objectJson['product']),
+      price: objectJson['price'].toDouble(),
+      // discount: objectJson['discount'],
+      // totalPrice: objectJson['total_price'],
+      quantity: objectJson['qty'],
+      status: objectJson['status'],
+    );
   }
 }

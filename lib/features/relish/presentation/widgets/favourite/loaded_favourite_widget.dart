@@ -7,7 +7,7 @@ import 'package:you_cook/core/styles/color.dart';
 import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/features/relish/domain/entities/kitchen.dart';
 import 'package:you_cook/features/relish/presentation/pages/cart/add_to_cart.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/icon_with_background.dart';
 
 class ListOfFavourites extends StatelessWidget {
@@ -38,7 +38,7 @@ class ListOfFavourites extends StatelessWidget {
 
               return InkWell(
                   onTap: () {
-                    Get.to(() => Home(
+                    Get.to(() => RelishHome(
                         recentPage: AddToCart(
                             productIndex: index,
                             kitchen: Controllers.kitchenController.kitchens

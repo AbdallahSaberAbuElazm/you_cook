@@ -6,7 +6,7 @@ import 'package:you_cook/core/util/shared_obects_controllers.dart';
 import 'package:you_cook/core/widgets/go_elevated_btn.dart';
 import 'package:you_cook/features/relish/domain/entities/kitchen.dart';
 import 'package:you_cook/features/relish/presentation/pages/cart/cart_screen.dart';
-import 'package:you_cook/features/relish/presentation/pages/home/home.dart';
+import 'package:you_cook/features/relish/presentation/pages/home/relish_home.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/app_bars.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/icon_with_background.dart';
 import 'package:you_cook/features/relish/presentation/widgets/shared/rating_builder_with_number.dart';
@@ -104,7 +104,7 @@ class AddToCart extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Home(
+                            builder: (context) => RelishHome(
                                 recentPage: const CartScreen(),
                                 selectedIndex: 2)));
                   },
